@@ -1,0 +1,19 @@
+---
+# tasks file for zsh
+- name: Update and upgrade apt
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    upgrade: yes
+
+- name: Install zsh
+  ansible.builtin.package:
+    name: zsh
+    state: latest
+  become: true
+
+- name: Install oh my zsh
+  git:
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    dest: "{{ lookup('env','HOME') }}/.oh-my-zsh"
+    depth: 1
